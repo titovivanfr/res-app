@@ -1,3 +1,4 @@
+name: residence-app
 services:
   database:
     image: postgres
@@ -5,7 +6,7 @@ services:
     container_name: db
     shm_size: 256mb
     ports:
-      - "${DB_PORT}"
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
