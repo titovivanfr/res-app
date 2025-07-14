@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+
+#[ApiResource]
 class User
 {
     #[ORM\Id]
@@ -14,7 +17,7 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -25,7 +28,7 @@ class User
 
     #[ORM\OneToOne(inversedBy: 'user_full', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?InfoUser $id_info_user = null;
+    private ?InfoUser $info_user = null;
 
     public function getId(): ?int
     {
@@ -68,14 +71,14 @@ class User
         return $this;
     }
 
-    public function getIdInfoUser(): ?InfoUser
+    public function getInfoUser(): ?InfoUser
     {
-        return $this->id_info_user;
+        return $this->info_user;
     }
 
-    public function setIdInfoUser(InfoUser $id_info_user): static
+    public function setInfoUser(InfoUser $info_user): static
     {
-        $this->id_info_user = $id_info_user;
+        $this->info_user = $info_user;
 
         return $this;
     }
