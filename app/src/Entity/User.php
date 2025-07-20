@@ -23,8 +23,8 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $pwd = null;
 
-    #[ORM\Column]
-    private ?int $type_user = null;
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
     #[ORM\OneToOne(inversedBy: 'user_full', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -59,16 +59,12 @@ class User
         return $this;
     }
 
-    public function getTypeUser(): ?int
+    public function getRoles(): array
     {
-        return $this->type_user;
-    }
+        $roles = $this->roles;
+        $roles[] = 'ROLE_CITIZEN';
 
-    public function setTypeUser(int $type_user): static
-    {
-        $this->type_user = $type_user;
-
-        return $this;
+        return array_unique($roles);
     }
 
     public function getInfoUser(): ?InfoUser
