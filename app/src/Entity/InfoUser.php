@@ -35,7 +35,7 @@ class InfoUser
     #[ORM\Column(length: 255)]
     private ?string $name_using = null;
 
-    #[ORM\OneToOne(mappedBy: 'id_info_user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'info_user', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private ?User $user_full = null;
 
     public function getId(): ?int
@@ -135,8 +135,8 @@ class InfoUser
     public function setUserFull(User $user_full): static
     {
         // set the owning side of the relation if necessary
-        if ($user_full->getIdInfoUser() !== $this) {
-            $user_full->setIdInfoUser($this);
+        if ($user_full->getInfoUser() !== $this) {
+            $user_full->setInfoUser($this);
         }
 
         $this->user_full = $user_full;

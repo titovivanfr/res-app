@@ -15,18 +15,26 @@ security:
         main:
             lazy: true
             json_login:
-                check_path: api_login
+                check_path: /api_login
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
+        api:
+            pattern:   ^/api
+            stateless: true
+            jwt: ~
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        # - { path: ^/api, roles: ROLE_SUPER_ADM }
 
 when@test:
     security:
