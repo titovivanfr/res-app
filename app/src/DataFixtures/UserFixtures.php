@@ -27,7 +27,8 @@ class UserFixtures extends Fixture
             $user->setEmail($faker->unique()->email());
             $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
             $user->setPassword($hashedPassword);
-
+            $user->setRoles($faker->randomElement(['ROLE_CITIZEN', 'ROLE_SYNDIC']));
+            
             $info = new InfoUser();
             $info->setFirstName($faker->firstName());
             $info->setLastName($faker->lastName());
