@@ -28,18 +28,16 @@ class UserFixtures extends Fixture
             $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
             $user->setPassword($hashedPassword);
 
-            // $info = new InfoUser();
-            // $info->setFirstName($faker->firstName());
-            // $info->setLastName($faker->lastName());
-            // $info->setBirthday($faker->dateTimeBetween('-60 years', '-18 years'));
-            // $info->setPhone($faker->phoneNumber());
-            // $info->setAddr($faker->address());
-            // $info->setCivility($faker->randomElement(['Mr', 'Ms']));
-            // $info->setNameUsing($faker->userName());
+            $info = new InfoUser();
+            $info->setFirstName($faker->firstName());
+            $info->setLastName($faker->lastName());
+            $info->setBirthday($faker->dateTimeBetween('-60 years', '-18 years'));
+            $info->setPhone($faker->phoneNumber());
+            $info->setAddr($faker->address());
+            $info->setCivility($faker->randomElement(['Mr', 'Ms']));
+            $info->setNameUsing($faker->userName());
 
-            // $user->setInfoUser($info);
-            // $info->setUserFull($user);
-
+            $user->setInfoUser($info);
             $manager->persist($user);
         }
 

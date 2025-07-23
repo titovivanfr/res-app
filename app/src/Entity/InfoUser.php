@@ -134,7 +134,6 @@ class InfoUser
 
     public function setUserFull(User $user_full): static
     {
-        // set the owning side of the relation if necessary
         if ($user_full->getInfoUser() !== $this) {
             $user_full->setInfoUser($this);
         }
