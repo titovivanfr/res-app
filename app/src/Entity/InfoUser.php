@@ -35,7 +35,7 @@ class InfoUser
     #[ORM\Column(length: 255)]
     private ?string $name_using = null;
 
-    #[ORM\OneToOne(mappedBy: 'info_user', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'infoUser', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private ?User $user_full = null;
 
     public function getId(): ?int

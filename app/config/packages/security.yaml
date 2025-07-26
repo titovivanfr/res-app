@@ -34,7 +34,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        # - { path: ^/api, roles: ROLE_SUPER_ADM }
+        # - { path: ^/api, roles: ROLE_SYNDIC }
 
 when@test:
     security:

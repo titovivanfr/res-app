@@ -10,7 +10,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'app_user')]
-#[ApiResource(security: "is_granted('ROLE_ADMIN')")]
+#[ApiResource(
+    security: "is_granted('ROLE_SYNDIC')",
+    // openapi: false
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -29,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(inversedBy: 'user_full', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?InfoUser $info_user = null;
+    private ?InfoUser $infoUser = null;
 
     public function getId(): ?int
     {
@@ -63,8 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_CITIZEN';
-
         return array_unique($roles);
     }
 
@@ -77,12 +78,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getInfoUser(): ?InfoUser
     {
-        return $this->info_user;
+        return $this->infoUser;
     }
 
-    public function setInfoUser(InfoUser $info_user): static
+    public function setInfoUser(InfoUser $infoUser): static
     {
-        $this->info_user = $info_user;
+        $this->infoUser = $infoUser;
 
         return $this;
     }
