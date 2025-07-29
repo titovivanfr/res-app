@@ -19,10 +19,8 @@ final class ApiLoginController extends AbstractController
             ], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        $token = 'test';
         return $this->json([
             'user'  => $user->getInfoUser(),
-            'token' => $token,
             'roles'=> $user->getRoles()
         ]);
     }
