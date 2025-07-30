@@ -23,11 +23,12 @@ class UserFixtures extends Fixture
         $faker = Faker::create('fr_FR');
 
         for ($i = 0; $i < 100; $i++) {
+            $ran = rand(0,1);
             $user = new User();
             $user->setEmail($faker->unique()->email());
             $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
             $user->setPassword($hashedPassword);
-            $user->setRoles($faker->randomElement(['ROLE_CITIZEN', 'ROLE_SYNDIC']));
+            $user->setRoles($ran === 0 ? ['ROLE_CITIZEN']:['ROLE_SYNDIC']);
             
             $info = new InfoUser();
             $info->setFirstName($faker->firstName());
