@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ResidenceRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ResidenceRepository::class)]
+#[ApiResource(
+    security: "is_granted('ROLE_SYNDIC')",
+    // openapi: false
+)]
 class Residence
 {
     #[ORM\Id]
