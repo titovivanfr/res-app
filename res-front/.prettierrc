@@ -6,7 +6,7 @@
   "htmlWhitespaceSensitivity": "ignore",
   "trailingComma": "none",
   "bracketSameLine": false,
-  "printWidth": 100,
+  "printWidth": 60,
   "arrowParens": "avoid",
-  "editor.formatOnSave": true
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
