@@ -5,12 +5,14 @@ import {
   InputLabel,
   Input,
   FormHelperText,
-  Button
+  Button,
+  CircularProgress
 } from '@mui/material';
-
-import Login from '@/api/login/login';
+import Router from 'next/router';
+import LoginHook from '@/api/login/loginHook';
 
 export default function Home() {
+  const { isLoading, login } = LoginHook();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,10 +25,9 @@ export default function Home() {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    Login(formData.email, formData.password);
+    await login(formData.email, formData.password);
   };
 
   return (
@@ -65,14 +66,18 @@ export default function Home() {
             passe.{' '}
           </FormHelperText>
         </FormControl>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-        >
-          Envoyer
-        </Button>
+        {!isLoading ? (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+          >
+            Envoyer
+          </Button>
+        ) : (
+          <CircularProgress sx={{ textAlign: 'center' }} />
+        )}
       </form>
     </div>
   );
