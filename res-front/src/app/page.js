@@ -6,18 +6,23 @@ import {
   Input,
   FormHelperText,
   Button,
-  CircularProgress
+  CircularProgress,
+  Snackbar
 } from '@mui/material';
+
+import Fade from '@mui/material/Fade';
+
 import Router from 'next/router';
 import LoginHook from '@/api/login/loginHook';
 
 export default function Home() {
-  const { isLoading, login } = LoginHook();
+  const { isLoading, login, isError, setIsError } =
+    LoginHook();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-
+  const closeSnackBar = () => setIsError(false);
   const handleChange = e => {
     setFormData({
       ...formData,
@@ -76,8 +81,25 @@ export default function Home() {
             Envoyer
           </Button>
         ) : (
-          <CircularProgress sx={{ textAlign: 'center' }} />
+          <CircularProgress
+            sx={{
+              margin: '0 auto'
+            }}
+          />
         )}
+        {isError ? (
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'
+            }}
+            slots={{ transition: Fade }}
+            message={isError.message}
+            onClose={closeSnackBar}
+          />
+        ) : null}
       </form>
     </div>
   );

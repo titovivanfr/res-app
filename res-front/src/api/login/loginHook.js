@@ -17,7 +17,12 @@ export default function LoginHook() {
       .post(
         url,
         { email, password },
-        { headers: { 'Content-Type': 'application/json' } }
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            withCredentials: true
+          }
+        }
       )
       .then(res => {
         console.log(res);
@@ -44,6 +49,7 @@ export default function LoginHook() {
   return {
     isLoading,
     login,
-    isError
+    isError,
+    setIsError
   };
 }
