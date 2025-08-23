@@ -19,28 +19,25 @@ export default function LoginHook() {
         { email, password },
         {
           headers: {
-            'Content-Type': 'application/json',
-            withCredentials: true
+            'Content-Type': 'application/json'
           }
-        }
+        },
+        { withCredentials: true }
       )
       .then(res => {
         console.log(res);
       })
       .catch(function (error) {
-        console.log(error.response);
-
-        if (error.response.status === 401) {
+        const status = error.response?.status;
+        if (status === 401)
           setIsError({
             message:
               "Informations d'identification non valides"
           });
-        }
-        if (error.response.status > 500) {
+        else if (status > 500)
           setIsError({
             message: "Quelque chose s'est mal passé"
           });
-        }
       })
       .finally(() => {
         setIsLoading(false);

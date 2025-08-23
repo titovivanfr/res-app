@@ -9,10 +9,8 @@ import {
   CircularProgress,
   Snackbar
 } from '@mui/material';
-
 import Fade from '@mui/material/Fade';
-
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import LoginHook from '@/api/login/loginHook';
 
 export default function Home() {
@@ -22,6 +20,7 @@ export default function Home() {
     email: '',
     password: ''
   });
+  const router = useRouter();
   const closeSnackBar = () => setIsError(false);
   const handleChange = e => {
     setFormData({
@@ -32,7 +31,13 @@ export default function Home() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await login(formData.email, formData.password);
+    const res = await login(
+      formData.email,
+      formData.password
+    );
+    if (res?.ok) {
+      router.push('/dashbord');
+    }
   };
 
   return (
