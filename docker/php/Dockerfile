@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash postgresql-dev && \
     docker-php-ext-install pgsql pdo_pgsql
