@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enum\CivilityEnum;
+use App\Enum\GenderEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,7 +22,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'civilite',
+        'civility',
         'genre',
         'birthday',
         'phone',
@@ -53,6 +56,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'civility' => CivilityEnum::class,
+            'genre'    => GenderEnum::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

@@ -1,4 +1,7 @@
 import type { Config } from 'ziggy-js';
+import { CivilityEnum } from './enum/civility.enum';
+import { GendreEnum } from './enum/gendre.enum';
+import { UserTypeEnum } from './enum/userType.enum';
 
 export interface Auth {
     user: User;
@@ -18,9 +21,19 @@ export interface User {
     last_name: string;
     using_name: string;
     email: string;
-    avatar?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    apartment: string;
+    birthday: string;
+    civility: CivilityEnum;
+    genre: GendreEnum;
+    phone: string;
+    user_type: UserTypeEnum;
+    // [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface NavLinks {
+    name: string;
+    href: string;
 }
