@@ -8,8 +8,10 @@ export default function Layout({
     const auth = usePage<{ auth: Auth }>().props.auth;
 
     const navItems: NavLinks[] = [
+        { name: 'Accueille', href: '/' },
         { name: 'Dashboard', href: '/dashboard' },
         { name: 'Login', href: '/login' },
+        { name: 'Logout', href: '/logout' },
     ];
     return (
         <main>
@@ -68,10 +70,21 @@ export default function Layout({
                         >
                             <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 rtl:space-x-reverse dark:border-gray-700 dark:bg-gray-800 md:dark:bg-gray-900">
                                 {navItems.map((item) => {
-                                    const isLogout =
+                                    if (
                                         item.name ===
                                             'Login' &&
-                                        auth?.user;
+                                        auth?.user
+                                    ) {
+                                        return null;
+                                    }
+
+                                    if (
+                                        item.name ===
+                                            'Logout' &&
+                                        !auth?.user
+                                    ) {
+                                        return null;
+                                    }
 
                                     if (
                                         item.name ===
@@ -96,9 +109,7 @@ export default function Layout({
                                                 }
                                                 className={`${baseClasses} ${activeClasses}`}
                                             >
-                                                {isLogout
-                                                    ? 'Logout'
-                                                    : item.name}
+                                                {item.name}
                                             </a>
                                         </li>
                                     );
