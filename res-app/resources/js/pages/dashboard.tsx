@@ -1,10 +1,12 @@
+import { DashboardNav } from '../../components/dashboard_nav';
 import Layout from '../../layouts/layout';
-export default function Dashboard() {
+export default function Dashboard(): React.ReactElement {
     return (
         <Layout>
-            <div className="grid min-h-screen items-center justify-items-center p-8 font-sans sm:p-20">
+            <DashboardNav />
+            <section className="">
                 <p>dashoboard</p>
-            </div>{' '}
+            </section>
         </Layout>
     );
 }

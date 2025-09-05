@@ -37,3 +37,9 @@ export interface NavLinks {
     name: string;
     href: string;
 }
+
+export interface DashboardNavLinks {
+    name: string;
+    href: string;
+    icon: react.RefAttributes<SVGSVGElement>;
+}
