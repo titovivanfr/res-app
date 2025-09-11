@@ -13,8 +13,8 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LogoutController::class, 'logout']);
 
-Route::middleware(['auth', 'auth.session'])->group(function () {
+// Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-});
+// });
