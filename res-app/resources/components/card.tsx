@@ -2,10 +2,17 @@ import React from 'react';
 
 interface CardProps {
     children: React.ReactNode;
+    className?: string;
 }
-export default function Card({ children }: CardProps) {
+export default function Card({
+    children,
+    className,
+}: CardProps): React.ReactElement {
     return (
-        <div className="rounded-lg bg-first p-4 shadow-md">
+        <div
+            className={`size-max rounded-lg bg-first shadow-md ${className ?? ''}`}
+        >
+            {' '}
             {children}
         </div>
     );

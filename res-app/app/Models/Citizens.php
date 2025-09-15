@@ -11,8 +11,8 @@ class Citizens extends Model
     /** @use HasFactory<\Database\Factories\CitizensFactory> */
     use HasFactory;
 
-    public function residance(): BelongsTo
+    public function residence(): BelongsTo
     {
-        return $this->belongsTo(Residance::class);
+        return $this->belongsTo(Residence::class);
     }
 }

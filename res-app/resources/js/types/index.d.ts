@@ -43,3 +43,14 @@ export interface DashboardNavLinks {
     href: string;
     icon: react.RefAttributes<SVGSVGElement>;
 }
+
+export interface ResidenceIntreface {
+    city: string;
+    country: string;
+    id: number;
+    number: string;
+    postal_code: string;
+    street: string;
+    user_id: number;
+    way: string;
+}

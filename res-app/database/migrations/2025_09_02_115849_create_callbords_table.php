@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('callbords', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('residance_id')->constrained();
+            $table->foreignId('residence_id')->constrained();
             $table->integer('type_content');
             $table->integer('status_content');
             $table->string('title');

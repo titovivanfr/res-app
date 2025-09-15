@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Enum\CivilityEnum;
 use App\Enum\GenderEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -63,8 +63,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function residance(): HasOne
+    public function residences(): HasMany
     {
-        return $this->hasOne(Residance::class);
+        return $this->hasMany(Residence::class);
     }
 }

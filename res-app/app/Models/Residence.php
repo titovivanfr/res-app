@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Residance extends Model
+class Residence extends Model
 {
-    /** @use HasFactory<\Database\Factories\ResidanceFactory> */
+    /** @use HasFactory<\Database\Factories\ResidenceFactory> */
     use HasFactory;
     public function user(): BelongsTo
     {

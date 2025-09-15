@@ -1,30 +1,34 @@
 import { Greeting } from '@/tools/greeting';
-import { Auth } from '@/types';
-import Card from '../../../components/card';
+import { ResidenceIntreface, User } from '@/types';
+import { Residence } from '../../../components/residence/residence';
 import DashboardLayout from '../../../layouts/dashboard_layout';
-
+interface DashboardProps {
+    user: User;
+    residences: ResidenceIntreface[];
+}
 export default function Dashboard({
     user,
-}: Auth): React.ReactElement {
-    const { first_name, last_name, using_name } = user;
+    residences,
+}: DashboardProps): React.ReactElement {
+    const { first_name, last_name, using_name, id } = user;
     const fn: string = Greeting({
         first_name,
         last_name,
         using_name,
     });
-    console.log(user);
 
     return (
         <DashboardLayout>
             <section className="grid md:p-6">
                 <article className="mb-2 px-2">
-                    <h1 className="font-bold">
+                    <h1 className="font-bold text-fourth">
                         Bonjour, {fn}
                     </h1>
                 </article>
-                <Card>
-                    <p>dashboard</p>
-                </Card>
+                <Residence
+                    residences={residences}
+                    id={id}
+                />
             </section>
         </DashboardLayout>
     );

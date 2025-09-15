@@ -2,17 +2,17 @@
 namespace App\DTOs;
 
 use App\Models\User;
+use App\Repositories\Interfaces\DTOInterface;
 
-class UserDTO {
-    private $user;
+class UserDTO implements DTOInterface {
 
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(private readonly User $user) {
     }
 
     public function toArray():array
     {
         return [
+            'id' => $this->user->id,
             'apartment' => $this->user->apartment,
             'birthday' => $this->user->birthday,
             'civility' => $this->user->civility,

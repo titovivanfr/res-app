@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Residance;
+use App\Models\Residence;
 use Illuminate\Http\Request;
 
-class ResidanceController extends Controller
+class ResidenceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ResidanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Residance $residance)
+    public function show(Residence $Residence)
     {
         //
     }
@@ -42,7 +42,7 @@ class ResidanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Residance $residance)
+    public function edit(Residence $residence)
     {
         //
     }
@@ -50,7 +50,7 @@ class ResidanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Residance $residance)
+    public function update(Request $request, Residence $residence)
     {
         //
     }
@@ -58,7 +58,7 @@ class ResidanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Residance $residance)
+    public function destroy(residence $residence)
     {
         //
     }
