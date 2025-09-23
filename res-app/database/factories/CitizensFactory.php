@@ -17,7 +17,8 @@ class CitizensFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'residence_id'=> null,
+            'user_id'=> null,
         ];
     }
 }

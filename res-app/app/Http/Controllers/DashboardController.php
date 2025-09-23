@@ -11,13 +11,14 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
     public function index() : Response {
-    $du = new UserDTO(Auth::user());
-    $dr = new ResidencesDTO(Auth::user()->residences);
-    $user = $du->toArray();
-    $residences = $dr->toArray();
-    return Inertia::render('dashboard/dashboard',[
-        'user'=> $user,
-        'residences' => $residences
-    ]);
+        $du = new UserDTO(Auth::user());
+        $dr = new ResidencesDTO(Auth::user()->residences);
+        $user = $du->toArray();
+        $residences = $dr->toArray();
+        
+        return Inertia::render('dashboard/dashboard',[
+            'user'=> $user,
+            'residences' => $residences
+        ]);
     }
 }

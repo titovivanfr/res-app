@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ResidenceController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,4 +17,5 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/residence/{id}', [ResidenceController::class, 'index']);
 });

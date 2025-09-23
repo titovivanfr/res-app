@@ -2,17 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\ResidencesDTO;
+use App\DTOs\UserDTO;
 use App\Models\Residence;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ResidenceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        //
+
+        $residence = Residence::with('citizens.user')->findOrFail($request->id);
+        $residenceDTO = new ResidencesDTO(Collection::make([$residence]))->toArray()[0];
+        $userIds = $residence->citizens->pluck('user_id');
+        $citizens = User::find($userIds);
+        $citizensDTO = $citizens->map(fn($citizen) => (new UserDTO($citizen))->toArray());
+
+        return Inertia::render('dashboard/residence', [
+            'residence' => $residenceDTO,
+            'citizens'  => $citizensDTO,
+        ]);
     }
 
     /**

@@ -23,7 +23,9 @@ export function ResidenceList({
                         key={residence.id}
                         disablePadding
                     >
-                        <ListItemButton>
+                        <ListItemButton
+                            href={`/residence/${residence.id}`}
+                        >
                             <ListItemText
                                 className="text-fourth"
                                 primary={`${residence.number} ${residence.way}, ${residence.street}, ${residence.city}`}

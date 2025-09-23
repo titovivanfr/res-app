@@ -27,7 +27,6 @@ export default function Dashboard({
                 </article>
                 <Residence
                     residences={residences}
-                    id={id}
                 />
             </section>
         </DashboardLayout>

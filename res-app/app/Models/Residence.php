@@ -12,6 +12,15 @@ class Residence extends Model
 {
     /** @use HasFactory<\Database\Factories\ResidenceFactory> */
     use HasFactory;
+
+    protected $keyType = 'string';
+    
+    public $incrementing = false;
+
+    protected $fillable = [
+        'id', 'user_id', 'number', 'way', 'street', 'city', 'postal_code', 'country',
+    ];
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
