@@ -2,14 +2,27 @@ import { LogOut, Pin, PinOff } from 'lucide-react';
 import { useState } from 'react';
 import { NavItems } from './nav_items';
 export function DashboardNav(): React.ReactElement {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(() => {
+        return localStorage.getItem('pin') === 'true';
+    });
 
+    const pinToggle = (): void => {
+        setIsOpen((prev) => {
+            const newState = !prev;
+            if (newState) {
+                localStorage.setItem('pin', 'true');
+            } else {
+                localStorage.removeItem('pin');
+            }
+            return newState;
+        });
+    };
     return (
         <aside
-            className={`group relative float-left h-full ${isOpen ? 'w-50' : 'w-28'} overflow-hidden bg-third transition-[width] duration-500 ease-in-out hover:w-50`}
+            className={`group relative float-left h-full ${isOpen ? 'w-60' : 'w-28'} overflow-hidden bg-third transition-[width] duration-300 ease-in-out hover:w-60`}
         >
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => pinToggle()}
                 className={`absolute right-0 m-2 cursor-pointer rounded-lg p-1 text-second hover:bg-fourth ${isOpen ? 'bg-fourth' : null}`}
             >
                 {isOpen ? (

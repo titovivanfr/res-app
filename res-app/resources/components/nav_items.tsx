@@ -8,8 +8,8 @@ export function NavItems({
 }: NavItemsProps): React.ReactElement {
     const links: DashboardNavLinks[] = [
         {
-            name: 'Résidents',
-            href: '/citizens',
+            name: 'Tableau de bord',
+            href: '/dashboard',
             icon: <UsersRound size={28} />,
         },
         {
@@ -30,12 +30,12 @@ export function NavItems({
                         className="me-2 flex items-center space-x-3 text-second"
                     >
                         {item.icon}
+                        <span
+                            className={`${isOpen ? 'block' : 'hidden'} pb-0 text-lg text-second group-hover:block min-w-50`}
+                        >
+                            {item.name}
+                        </span>
                     </a>
-                    <span
-                        className={`${isOpen ? 'block' : 'hidden'} pb-0 text-lg text-second group-hover:block`}
-                    >
-                        {item.name}
-                    </span>
                 </li>
             ))}
         </ul>

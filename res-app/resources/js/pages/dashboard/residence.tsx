@@ -1,5 +1,6 @@
 import { ResidenceIntreface, User } from '@/types';
 import Card from '../../../components/card';
+import TableCitizens from '../../../components/table_citizens';
 import DashboardLayout from '../../../layouts/dashboard_layout';
 interface ResidencePagePropsInterface {
     residence: ResidenceIntreface;
@@ -17,14 +18,6 @@ export default function Residence({
         street,
         postal_code,
     } = residence;
-    console.log(
-        city,
-        way,
-        country,
-        number,
-        street,
-        postal_code,
-    );
     console.log(citizens);
 
     return (
@@ -38,6 +31,9 @@ export default function Residence({
                             {postal_code} {country}
                         </b>
                     </p>
+                </Card>
+                <Card className="my-4 p-6">
+                    <TableCitizens rows={citizens} />
                 </Card>
             </section>
         </DashboardLayout>
