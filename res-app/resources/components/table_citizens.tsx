@@ -1,5 +1,10 @@
 import Paper from '@mui/material/Paper';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    GridActionsCellItem,
+    GridColDef,
+} from '@mui/x-data-grid';
+import { Pencil, Trash } from 'lucide-react';
 import { TableRow } from '../js/types/table';
 
 interface TableProps {
@@ -64,6 +69,27 @@ export default function TableCitizens({
             headerName: 'Anniversaire',
             width: 130,
         },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Actions',
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={<Pencil size={20} />}
+                    label="Corriger"
+                    onClick={() =>
+                        alert(`Редактируем ${params.row}`)
+                    }
+                />,
+                <GridActionsCellItem
+                    icon={<Trash size={20} />}
+                    label="Supprimer"
+                    onClick={() =>
+                        alert(`Удаляем ${params.row.id}`)
+                    }
+                />,
+            ],
+        },
     ];
     return (
         <>
@@ -75,7 +101,6 @@ export default function TableCitizens({
                         pagination: { paginationModel },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
                     sx={{ border: 0 }}
                 />
             </Paper>
