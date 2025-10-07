@@ -11,6 +11,6 @@ export interface TableRow {
     id: string;
     last_name: string;
     phone: string;
-    user_type: UserTypeEnum;
+    user_type?: UserTypeEnum;
     using_name: string;
 }

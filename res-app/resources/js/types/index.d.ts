@@ -21,7 +21,7 @@ export interface User {
     last_name: string;
     using_name: string;
     email: string;
-    email_verified_at: string | null;
+    email_verified_at?: string | null;
     created_at: string;
     updated_at: string;
     apartment: string;
@@ -29,8 +29,7 @@ export interface User {
     civility: CivilityEnum;
     genre: GendreEnum;
     phone: string;
-    user_type: UserTypeEnum;
-    // [key: string]: unknown; // This allows for additional properties...
+    user_type?: UserTypeEnum;
 }
 
 export interface NavLinks {

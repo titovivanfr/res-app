@@ -1,6 +1,6 @@
-import { ResidenceIntreface } from '@/types';
-import Card from '../card';
+import { ResidenceIntreface } from '@/js/types';
 import { ResidenceList } from './residence_list';
+import Card from '../card';
 interface ResidenceListProps {
     residences: ResidenceIntreface[];
 }

@@ -1,4 +1,4 @@
-import { DashboardNavLinks } from '@/types';
+import { DashboardNavLinks } from '@/js/types';
 import { UserRoundPen, UsersRound } from 'lucide-react';
 interface NavItemsProps {
     isOpen: boolean;

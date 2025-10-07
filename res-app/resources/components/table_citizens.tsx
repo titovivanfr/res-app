@@ -75,14 +75,24 @@ export default function TableCitizens({
             headerName: 'Actions',
             getActions: (params) => [
                 <GridActionsCellItem
-                    icon={<Pencil size={20} />}
+                    icon={
+                        <Pencil
+                            size={20}
+                            className="text-fourth"
+                        />
+                    }
                     label="Corriger"
                     onClick={() =>
                         alert(`Редактируем ${params.row}`)
                     }
                 />,
                 <GridActionsCellItem
-                    icon={<Trash size={20} />}
+                    icon={
+                        <Trash
+                            size={20}
+                            className="text-fourth"
+                        />
+                    }
                     label="Supprimer"
                     onClick={() =>
                         alert(`Удаляем ${params.row.id}`)
@@ -91,6 +101,7 @@ export default function TableCitizens({
             ],
         },
     ];
+    const textFourth = '#537791';
     return (
         <>
             <Paper sx={{ height: 400, width: '100%' }}>
@@ -101,7 +112,16 @@ export default function TableCitizens({
                         pagination: { paginationModel },
                     }}
                     pageSizeOptions={[5, 10]}
-                    sx={{ border: 0 }}
+                    sx={{
+                        border: 0,
+                        color: textFourth,
+                        '& .MuiDataGrid-footerContainer': {
+                            color: textFourth,
+                        },
+                        '& .MuiTablePagination-root': {
+                            color: textFourth,
+                        },
+                    }}
                 />
             </Paper>
         </>
