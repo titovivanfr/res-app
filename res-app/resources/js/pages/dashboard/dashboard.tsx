@@ -1,5 +1,5 @@
-import { Greeting } from '@/tools/greeting';
-import { ResidenceIntreface, User } from '@/types';
+import { Greeting } from '@/js/tools/greeting';
+import { ResidenceIntreface, User } from '@/js/types';
 import { Residence } from '../../../components/residence/residence';
 import DashboardLayout from '../../../layouts/dashboard_layout';
 interface DashboardProps {

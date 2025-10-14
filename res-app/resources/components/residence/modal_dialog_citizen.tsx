@@ -1,5 +1,8 @@
+import useDialogCitizenHook from '@/js/hooks/useDialogCitizenHook';
+import { User } from '@/js/types';
 import { CivilityEnum } from '@/js/types/enum/civility.enum';
 import { GendreEnum } from '@/js/types/enum/gendre.enum';
+import { UserTypeEnum } from '@/js/types/enum/userType.enum';
 import {
     DialogContent,
     FormControl,
@@ -9,11 +12,59 @@ import {
     MenuItem,
     Select,
 } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-export default function ModalDialogCitizen() {
+interface ModalDialogCitizenProps {
+    user: User | null;
+    onSubmit: (user: User) => void;
+}
+export default function ModalDialogCitizen({
+    user,
+    onSubmit,
+}: ModalDialogCitizenProps): React.ReactElement {
+    const {
+        formData,
+        handleInputChange,
+        handleSelectChange,
+    } = useDialogCitizenHook({ user });
     const textColor = '#537791';
     const borderColor = '#c1c0b9';
-
+const commonFieldStyles = {
+    color: textColor,
+    '& .MuiInputBase-root, & .MuiInput-root, & .MuiOutlinedInput-root': {
+        color: textColor,
+        borderColor: borderColor,
+        '& fieldset': {
+            borderColor: borderColor,
+        },
+        '&:hover fieldset': {
+            borderColor: borderColor,
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: borderColor,
+        },
+    },
+    '& .MuiInput-underline:before': {
+        borderBottom: `1px solid ${borderColor}`,
+    },
+    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+        borderBottom: `1px solid ${borderColor}`,
+    },
+    '& .MuiInput-underline:after': {
+        borderBottom: `1px solid ${borderColor}`,
+    },
+    '& .MuiSvgIcon-root': {
+        color: textColor,
+    },
+    '& .MuiInputLabel-root': {
+        color: textColor,
+    },
+    '& .MuiInputLabel-root.Mui-focused': {
+        color: textColor,
+    },
+};
     const inputStyles = {
         color: textColor,
         '&:hover:not(.Mui-disabled)::before': {
@@ -29,68 +80,101 @@ export default function ModalDialogCitizen() {
             borderBottom: `1px solid ${borderColor}`,
         },
     };
+    const selectStyles = {
+        color: textColor,
+        '& .MuiInputBase-root': {
+            color: textColor,
+        },
+        '& .MuiSelect-select': {
+            borderBottom: `1px solid ${borderColor}`,
+            '&:focus': {
+                borderBottom: `1px solid ${borderColor}`,
+            },
+            '&:hover': {
+                borderBottom: `1px solid ${borderColor}`,
+            },
+        },
+        '& .MuiSvgIcon-root': {
+            color: textColor,
+        },
+        '& .MuiInput-underline:before': {
+            borderBottom: `1px solid ${borderColor}`,
+        },
+        '& .MuiInput-underline:hover:not(.Mui-disabled):before':
+            {
+                borderBottom: `1px solid ${borderColor}`,
+            },
+        '& .MuiInput-underline:after': {
+            borderBottom: `1px solid ${borderColor}`,
+        },
+    };
 
     const labelStyles = {
         color: textColor,
         '&.Mui-focused': { color: textColor },
     };
-
-    const getSelectStyles = () => ({
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': { borderColor },
-            '&:hover fieldset': { borderColor: textColor },
-            '&.Mui-focused fieldset': {
-                borderColor: textColor,
-            },
-            '& .MuiInputBase-input': { color: textColor },
-        },
-        '& .MuiInputLabel-root': labelStyles,
-        '& .MuiFormHelperText-root': { color: textColor },
-    });
-
-    const selectFields = [
-        {
-            id: 'civility',
-            label: 'Civilité',
-            options: Object.values(CivilityEnum),
-            helper: 'Veuillez sélectionner la civilité',
-            labelId: 'civility-label',
-        },
-        {
-            id: 'genre',
-            label: 'Genre',
-            options: Object.values(GendreEnum),
-            helper: 'Veuillez sélectionner le genre',
-            labelId: 'genre-label',
-        },
-    ];
-
-    const textFields = [
+    const textFields: {
+        id: keyof Pick<
+            User,
+            | 'last_name'
+            | 'using_name'
+            | 'first_name'
+            | 'email'
+            | 'phone'
+            | 'apartment'
+        >;
+        label: string;
+        type?: string;
+    }[] = [
         { id: 'last_name', label: 'Nom' },
         { id: 'using_name', label: "Nom d'usage" },
         { id: 'first_name', label: 'Prénom' },
         { id: 'email', label: 'Email', type: 'email' },
         { id: 'phone', label: 'Téléphone', type: 'tel' },
-        { id: 'apartment', label: 'Appartment' },
+        { id: 'apartment', label: 'Appartement' },
     ];
-
+    const formSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        const userToSubmit: User = {
+            id: user?.id ?? '',
+            first_name: formData.first_name ?? '',
+            last_name: formData.last_name ?? '',
+            using_name: formData.using_name ?? '',
+            email: formData.email ?? '',
+            apartment: formData.apartment ?? '',
+            birthday: formData.birthday ?? '',
+            civility: formData.civility ?? CivilityEnum.MR,
+            genre: formData.genre ?? GendreEnum.MAN,
+            phone: formData.phone ?? '',
+            user_type: UserTypeEnum.CITIZEN,
+        };
+        onSubmit(userToSubmit);
+    };
     return (
         <DialogContent className="m-w-25vw">
-            <form className="flex w-full flex-col gap-6">
+            <form
+                className="flex w-full flex-col gap-6"
+                onSubmit={formSubmit}
+            >
                 <FormGroup
                     className="flex justify-between"
                     row
                 >
                     <FormControl sx={{ width: '48%' }}>
-                        <InputLabel id="civility-label">
+                        <InputLabel
+                            id="civility-label"
+                            sx={labelStyles}
+                        >
                             Civilité
                         </InputLabel>
                         <Select
                             labelId="civility-label"
                             id="civility"
                             label="Civilité"
-                            defaultValue=""
-                            // onChange={handleChange}
+                            name="civility"
+                            value={formData.civility ?? ''}
+                            sx={selectStyles}
+                            onChange={handleSelectChange}
                         >
                             {Object.values(
                                 CivilityEnum,
@@ -108,15 +192,20 @@ export default function ModalDialogCitizen() {
                         </Select>
                     </FormControl>
                     <FormControl sx={{ width: '48%' }}>
-                        <InputLabel id="Genre-label">
+                        <InputLabel
+                            id="Genre-label"
+                            sx={labelStyles}
+                        >
                             Genre
                         </InputLabel>
                         <Select
                             labelId="Genre-label"
                             id="Genre"
                             label="Genre"
-                            defaultValue=""
-                            // onChange={handleChange}
+                            name="genre"
+                            value={formData.genre ?? ''}
+                            sx={selectStyles}
+                            onChange={handleSelectChange}
                         >
                             {Object.values(GendreEnum).map(
                                 (value) => (
@@ -133,46 +222,6 @@ export default function ModalDialogCitizen() {
                             )}
                         </Select>
                     </FormControl>
-                    {/* {selectFields.map(
-                        ({
-                            id,
-                            label,
-                            options,
-                            helper,
-                        }) => (
-                            <FormControl
-                                sx={{ width: '48%' }}
-                                key={id}
-                            >
-                                <TextField
-                                    id={id}
-                                    select
-                                    defaultValue={
-                                        options[0]
-                                    }
-                                    label={label}
-                                    helperText={helper}
-                                    sx={getSelectStyles()}
-                                >
-                                    {options.map(
-                                        (value) => (
-                                            <MenuItem
-                                                key={value}
-                                                value={
-                                                    value
-                                                }
-                                                sx={{
-                                                    color: textColor,
-                                                }}
-                                            >
-                                                {value}
-                                            </MenuItem>
-                                        ),
-                                    )}
-                                </TextField>
-                            </FormControl>
-                        ),
-                    )} */}
                 </FormGroup>
 
                 {textFields.map(
@@ -191,10 +240,24 @@ export default function ModalDialogCitizen() {
                                 id={id}
                                 type={type}
                                 sx={inputStyles}
+                                name={id}
+                                value={formData[id] ?? ''}
+                                onChange={handleInputChange}
                             />
                         </FormControl>
                     ),
                 )}
+                <FormControl>
+                    <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                    >
+                        <DatePicker
+                            name="birthday"
+                            label="Anniversary"
+                            sx={commonFieldStyles}
+                        />
+                    </LocalizationProvider>
+                </FormControl>
             </form>
         </DialogContent>
     );

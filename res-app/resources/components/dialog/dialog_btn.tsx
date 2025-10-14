@@ -21,6 +21,7 @@ export default function DialogBtn({
             color: colorSecond,
             backgroundColor: colorFouth,
         },
+        fontWeight: 'medium',
     };
     return (
         <React.Fragment>
