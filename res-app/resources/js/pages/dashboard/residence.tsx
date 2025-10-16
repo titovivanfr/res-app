@@ -1,3 +1,4 @@
+import useDialogCitizenHook from '@/js/hooks/useDialogCitizenHook';
 import { ResidenceIntreface, User } from '@/js/types';
 import { CirclePlus } from 'lucide-react';
 import Card from '../../../components/card';
@@ -21,7 +22,24 @@ export default function Residence({
         street,
         postal_code,
     } = residence;
+    const {
+        formData,
+        handleInputChange,
+        handleSelectChange,
+        errors,
+        setErrors,
+    } = useDialogCitizenHook({});
 
+    const handleSubmit = (
+        event: React.FormEvent<HTMLFormElement>,
+    ) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+        console.log('Form submitted:', data);
+        // if (onSubmit) onSubmit(data);
+        // handleClose();
+    };
     return (
         <DashboardLayout>
             <section className="grid md:p-6">
@@ -49,9 +67,15 @@ export default function Residence({
             <ModalDialog
                 open={true}
                 setOpen={() => alert('test')}
-                submitFn={() => alert('test')}
+                handleSubmit={handleSubmit}
             >
-                <ModalDialogCitizen />
+                <ModalDialogCitizen
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                    handleSelectChange={handleSelectChange}
+                    errors={errors}
+                    setErrors={setErrors}
+                />
             </ModalDialog>
         </DashboardLayout>
     );

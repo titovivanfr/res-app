@@ -1,6 +1,6 @@
 export interface ModalInterface {
     open: boolean;
     setOpen: (value: boolean) => void;
-    submitFn: () => void;
+    onSubmit: (e: any) => void;
     children: React.ReactElement;
 }

@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 import { CivilityEnum } from '../types/enum/civility.enum';
 import { GendreEnum } from '../types/enum/gendre.enum';
 interface useDialogCitizenHookProps {
-    user: User | null;
+    user?: User;
 }
 
 export default function useDialogCitizenHook({
@@ -22,6 +22,10 @@ export default function useDialogCitizenHook({
     handleSelectChange: (
         event: SelectChangeEvent<string>,
     ) => void;
+    errors: Record<string, string>;
+    setErrors: React.Dispatch<
+        React.SetStateAction<Record<string, string>>
+    >;
 } {
     const [formData, setFormData] = useState<Partial<User>>(
         {
@@ -36,6 +40,9 @@ export default function useDialogCitizenHook({
             birthday: user?.birthday ?? '',
         },
     );
+    const [errors, setErrors] = useState<
+        Record<string, string>
+    >({});
     const handleInputChange = (
         event: ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement
@@ -57,5 +64,7 @@ export default function useDialogCitizenHook({
         setFormData,
         handleInputChange,
         handleSelectChange,
+        errors,
+        setErrors,
     };
 }

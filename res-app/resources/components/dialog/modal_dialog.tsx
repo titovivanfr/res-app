@@ -1,57 +1,45 @@
-import { ModalInterface } from '@/js/types/modal';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import React, { ReactElement } from 'react';
-import DialogBtn from './dialog_btn';
+import DialogContent from '@mui/material/DialogContent';
+import { ReactElement } from 'react';
+import DialogBtn from '../dialog/dialog_btn';
+interface ModalInterface {
+    open: boolean;
+    setOpen: (v: boolean) => void;
+    handleSubmit?: (
+        event: React.FormEvent<HTMLFormElement>,
+    ) => void;
+    children?: React.ReactNode;
+}
 
 export default function ModalDialog({
     open,
     setOpen,
-    submitFn,
+    handleSubmit,
     children,
 }: ModalInterface): ReactElement {
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleSubmit = (
-        event: React.FormEvent<HTMLFormElement>,
-    ) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const formJson = Object.fromEntries(
-            (formData as any).entries(),
-        );
-        const email = formJson.email;
-        console.log(email);
-        handleClose();
-    };
-
     return (
-        <React.Fragment>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                fullWidth
-            >
-                {children}
+        <Dialog
+            open={open}
+            onClose={() => setOpen(false)}
+            fullWidth
+        >
+            <form onSubmit={handleSubmit}>
+                <DialogContent className="m-w-25vw flex w-full flex-col gap-6">
+                    {children}
+                </DialogContent>
                 <DialogActions>
                     <DialogBtn
-                        handlerFn={handleClose}
+                        handleBtn={() => setOpen(false)}
                         title="Fermer"
                         type="button"
                     />
                     <DialogBtn
-                        handlerFn={handleClose}
                         title="Ajouter"
-                        type="button"
+                        type="submit"
                     />
                 </DialogActions>
-            </Dialog>
-        </React.Fragment>
+            </form>
+        </Dialog>
     );
 }

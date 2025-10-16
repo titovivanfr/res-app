@@ -1,70 +1,81 @@
-import useDialogCitizenHook from '@/js/hooks/useDialogCitizenHook';
 import { User } from '@/js/types';
 import { CivilityEnum } from '@/js/types/enum/civility.enum';
 import { GendreEnum } from '@/js/types/enum/gendre.enum';
-import { UserTypeEnum } from '@/js/types/enum/userType.enum';
 import {
-    DialogContent,
     FormControl,
     FormGroup,
+    FormHelperText,
     Input,
     InputLabel,
     MenuItem,
     Select,
+    SelectChangeEvent,
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ChangeEvent } from 'react';
 
 interface ModalDialogCitizenProps {
-    user: User | null;
-    onSubmit: (user: User) => void;
+    formData: Partial<User>;
+    handleInputChange: (
+        event: ChangeEvent<
+            HTMLInputElement | HTMLTextAreaElement
+        >,
+    ) => void;
+    handleSelectChange: (
+        event: SelectChangeEvent<string>,
+    ) => void;
+    errors: Record<string, string>;
+    setErrors: React.Dispatch<
+        React.SetStateAction<Record<string, string>>
+    >;
 }
 export default function ModalDialogCitizen({
-    user,
-    onSubmit,
+    errors,
+    formData,
+    handleInputChange,
+    handleSelectChange,
+    setErrors,
 }: ModalDialogCitizenProps): React.ReactElement {
-    const {
-        formData,
-        handleInputChange,
-        handleSelectChange,
-    } = useDialogCitizenHook({ user });
     const textColor = '#537791';
     const borderColor = '#c1c0b9';
-const commonFieldStyles = {
-    color: textColor,
-    '& .MuiInputBase-root, & .MuiInput-root, & .MuiOutlinedInput-root': {
+    const commonFieldStyles = {
         color: textColor,
-        borderColor: borderColor,
-        '& fieldset': {
-            borderColor: borderColor,
+        '& .MuiInputBase-root, & .MuiInput-root, & .MuiOutlinedInput-root':
+            {
+                color: textColor,
+                borderColor: borderColor,
+                '& fieldset': {
+                    borderColor: borderColor,
+                },
+                '&:hover fieldset': {
+                    borderColor: borderColor,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: borderColor,
+                },
+            },
+        '& .MuiInput-underline:before': {
+            borderBottom: `1px solid ${borderColor}`,
         },
-        '&:hover fieldset': {
-            borderColor: borderColor,
+        '& .MuiInput-underline:hover:not(.Mui-disabled):before':
+            {
+                borderBottom: `1px solid ${borderColor}`,
+            },
+        '& .MuiInput-underline:after': {
+            borderBottom: `1px solid ${borderColor}`,
         },
-        '&.Mui-focused fieldset': {
-            borderColor: borderColor,
+        '& .MuiSvgIcon-root': {
+            color: textColor,
         },
-    },
-    '& .MuiInput-underline:before': {
-        borderBottom: `1px solid ${borderColor}`,
-    },
-    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-        borderBottom: `1px solid ${borderColor}`,
-    },
-    '& .MuiInput-underline:after': {
-        borderBottom: `1px solid ${borderColor}`,
-    },
-    '& .MuiSvgIcon-root': {
-        color: textColor,
-    },
-    '& .MuiInputLabel-root': {
-        color: textColor,
-    },
-    '& .MuiInputLabel-root.Mui-focused': {
-        color: textColor,
-    },
-};
+        '& .MuiInputLabel-root': {
+            color: textColor,
+        },
+        '& .MuiInputLabel-root.Mui-focused': {
+            color: textColor,
+        },
+    };
     const inputStyles = {
         color: textColor,
         '&:hover:not(.Mui-disabled)::before': {
@@ -133,52 +144,33 @@ const commonFieldStyles = {
         { id: 'phone', label: 'Téléphone', type: 'tel' },
         { id: 'apartment', label: 'Appartement' },
     ];
-    const formSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        const userToSubmit: User = {
-            id: user?.id ?? '',
-            first_name: formData.first_name ?? '',
-            last_name: formData.last_name ?? '',
-            using_name: formData.using_name ?? '',
-            email: formData.email ?? '',
-            apartment: formData.apartment ?? '',
-            birthday: formData.birthday ?? '',
-            civility: formData.civility ?? CivilityEnum.MR,
-            genre: formData.genre ?? GendreEnum.MAN,
-            phone: formData.phone ?? '',
-            user_type: UserTypeEnum.CITIZEN,
-        };
-        onSubmit(userToSubmit);
-    };
     return (
-        <DialogContent className="m-w-25vw">
-            <form
-                className="flex w-full flex-col gap-6"
-                onSubmit={formSubmit}
+        <>
+            <FormGroup
+                className="flex justify-between"
+                row
             >
-                <FormGroup
-                    className="flex justify-between"
-                    row
+                <FormControl
+                    sx={{ width: '48%' }}
+                    error={!!errors.civility}
                 >
-                    <FormControl sx={{ width: '48%' }}>
-                        <InputLabel
-                            id="civility-label"
-                            sx={labelStyles}
-                        >
-                            Civilité
-                        </InputLabel>
-                        <Select
-                            labelId="civility-label"
-                            id="civility"
-                            label="Civilité"
-                            name="civility"
-                            value={formData.civility ?? ''}
-                            sx={selectStyles}
-                            onChange={handleSelectChange}
-                        >
-                            {Object.values(
-                                CivilityEnum,
-                            ).map((value) => (
+                    <InputLabel
+                        id="civility-label"
+                        sx={labelStyles}
+                    >
+                        Civilité
+                    </InputLabel>
+                    <Select
+                        labelId="civility-label"
+                        id="civility"
+                        label="Civilité"
+                        name="civility"
+                        value={formData.civility ?? ''}
+                        sx={selectStyles}
+                        onChange={handleSelectChange}
+                    >
+                        {Object.values(CivilityEnum).map(
+                            (value) => (
                                 <MenuItem
                                     key={value}
                                     value={value}
@@ -188,77 +180,95 @@ const commonFieldStyles = {
                                 >
                                     {value}
                                 </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl sx={{ width: '48%' }}>
+                            ),
+                        )}
+                        {errors.civility && (
+                            <FormHelperText>
+                                {errors.civility}
+                            </FormHelperText>
+                        )}
+                    </Select>
+                </FormControl>
+                <FormControl
+                    sx={{ width: '48%' }}
+                    error={!!errors.genre}
+                >
+                    <InputLabel
+                        id="Genre-label"
+                        sx={labelStyles}
+                    >
+                        Genre
+                    </InputLabel>
+                    <Select
+                        labelId="Genre-label"
+                        id="Genre"
+                        label="Genre"
+                        name="genre"
+                        value={formData.genre ?? ''}
+                        sx={selectStyles}
+                        onChange={handleSelectChange}
+                    >
+                        {Object.values(GendreEnum).map(
+                            (value) => (
+                                <MenuItem
+                                    key={value}
+                                    value={value}
+                                    sx={{
+                                        color: textColor,
+                                    }}
+                                >
+                                    {value}
+                                </MenuItem>
+                            ),
+                        )}
+                    </Select>
+                    {errors.genre && (
+                        <FormHelperText>
+                            {errors.genre}
+                        </FormHelperText>
+                    )}
+                </FormControl>
+            </FormGroup>
+
+            {textFields.map(
+                ({ id, label, type = 'text' }) => (
+                    <FormControl
+                        fullWidth
+                        key={id}
+                    >
                         <InputLabel
-                            id="Genre-label"
+                            htmlFor={id}
                             sx={labelStyles}
                         >
-                            Genre
+                            {label}
                         </InputLabel>
-                        <Select
-                            labelId="Genre-label"
-                            id="Genre"
-                            label="Genre"
-                            name="genre"
-                            value={formData.genre ?? ''}
-                            sx={selectStyles}
-                            onChange={handleSelectChange}
-                        >
-                            {Object.values(GendreEnum).map(
-                                (value) => (
-                                    <MenuItem
-                                        key={value}
-                                        value={value}
-                                        sx={{
-                                            color: textColor,
-                                        }}
-                                    >
-                                        {value}
-                                    </MenuItem>
-                                ),
-                            )}
-                        </Select>
-                    </FormControl>
-                </FormGroup>
-
-                {textFields.map(
-                    ({ id, label, type = 'text' }) => (
-                        <FormControl
-                            fullWidth
-                            key={id}
-                        >
-                            <InputLabel
-                                htmlFor={id}
-                                sx={labelStyles}
-                            >
-                                {label}
-                            </InputLabel>
-                            <Input
-                                id={id}
-                                type={type}
-                                sx={inputStyles}
-                                name={id}
-                                value={formData[id] ?? ''}
-                                onChange={handleInputChange}
-                            />
-                        </FormControl>
-                    ),
-                )}
-                <FormControl>
-                    <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                    >
-                        <DatePicker
-                            name="birthday"
-                            label="Anniversary"
-                            sx={commonFieldStyles}
+                        <Input
+                            id={id}
+                            type={type}
+                            sx={inputStyles}
+                            name={id}
+                            value={formData[id] ?? ''}
+                            onChange={handleInputChange}
                         />
-                    </LocalizationProvider>
-                </FormControl>
-            </form>
-        </DialogContent>
+                        {errors[id] && (
+                            <FormHelperText>
+                                {errors[id]}
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                ),
+            )}
+            <FormControl>
+                <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                >
+                    <DatePicker
+                        name="birthday"
+                        label="Anniversary"
+                        sx={commonFieldStyles}
+                    />
+                </LocalizationProvider>
+            </FormControl>
+        </>
     );
 }

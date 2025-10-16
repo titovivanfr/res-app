@@ -1,15 +1,13 @@
 import { Button } from '@mui/material';
 import React from 'react';
 interface DialogBtnProps {
-    handlerFn: () => void;
+    handleBtn?: () => void;
     type?: 'button' | 'submit' | 'reset';
-    form?: string;
     title: string;
 }
 export default function DialogBtn({
-    handlerFn,
+    handleBtn,
     type = 'button',
-    form,
     title,
 }: DialogBtnProps): React.ReactElement {
     const colorFouth = '#537791';
@@ -26,10 +24,9 @@ export default function DialogBtn({
     return (
         <React.Fragment>
             <Button
-                onClick={handlerFn}
+                onClick={handleBtn ? handleBtn : undefined}
                 sx={styles}
                 type={type}
-                form={form}
             >
                 {title}
             </Button>

@@ -8,7 +8,7 @@ export interface TableRow {
     email: string;
     first_name: string;
     genre: GendreEnum;
-    id: string;
+    id?: string;
     last_name: string;
     phone: string;
     user_type?: UserTypeEnum;
